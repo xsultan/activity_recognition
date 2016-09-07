@@ -65,32 +65,52 @@ generateEquation <- function(dataSource, model){
 #'
 #' Dropping the most redundant variables in a step wise fashion, the remaining variables are used to build a GLM model, then extract only the statistically significant variables and rebuild the model. Finally, generate the probability formula.
 #'
-#' @param dataSource the dataframe to process.
+#' @param dataSource the data frame to process.
 #' @param predicator the independent variable.
 #' @return text
-#' @importFrom Hmisc
+#' @importFrom Hmisc, arm
 #'
 buildAModel <- function(dataSource, predicator){
-  sig_threshold = 0.05
+  sig_threshold = 0.05 # threshold of the p-value
+  datasetName = deparse(substitute(dataSource))
+
   redunancyForumla <- paste(predicator,'~.')
   redunancyOfModel <- redun(~., dataSource)
+  redunancyOfModel <- redunancyOfModel$In
   redunancyOfModel <- redunancyOfModel[redunancyOfModel != predicator]
-  forumla <- cat(redunancyOfModel$In, sep="+")
+  forumla <- paste(redunancyOfModel, collapse="+")
   forumlaOfModel <- paste(predicator,'~', forumla)
   modelFitness <- bayesglm(forumlaOfModel, data=dataSource, family = "binomial", control = list(maxit = 120))
   # extract the metrics that are statistically significant and rebuild the model.
-  significantMetrics <- names(coefficients(summary(model.x))[coefficients(summary(model.x))[,4] < sig_threshold,][,4])
+  significantMetrics <- names(coefficients(summary(modelFitness))[coefficients(summary(modelFitness))[,4] < sig_threshold,][,4])
   significantMetrics <- significantMetrics[ significantMetrics != "(Intercept)"]
-  significantMetrics <- cat(significantMetrics, sep="+")
+  significantMetrics <- paste(significantMetrics, collapse="+")
   forumla2 <- paste(predicator,'~',significantMetrics)
   #rebuilding the model
   modelFitness2 <- bayesglm(forumla2, data=dataSource, family = "binomial", control = list(maxit = 120))
+  summary(modelFitness2)
   # build the equation of the model with the metrics that are statistically significant.
+
+  ### FIX
+  # issue with passing the data frame name, can be fixed using the outputed text function 'capture.output'
   equation <- generateEquation(dataSource, modelFitness2)
 
   return(equation)
 }
 
+
+
+#' Calculate the explained deviance of a model
+#'
+#' Calculate the fitness of a model using the following forumla: R-squared = 1 - (estimated variance)/(observed variance)
+#'
+#' @param model the model to extract the explained deviance from.
+#' @return text
+#'
+R2 <- function(model){
+  ED = 1 - (model$deviance / model$null.deviance)
+  return (cat("Explained Deviance [R^2]: ", ED, sep=""))
+}
 
 
 
