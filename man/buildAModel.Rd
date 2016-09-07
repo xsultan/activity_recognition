@@ -4,10 +4,12 @@
 \alias{buildAModel}
 \title{Builds a GLM model}
 \usage{
-buildAModel(dataSource)
+buildAModel(dataSource, predicator)
 }
 \arguments{
-\item{dataSource}{the dataframe to process.}
+\item{dataSource}{the data frame to process.}
+
+\item{predicator}{the independent variable.}
 }
 \value{
 text

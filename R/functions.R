@@ -26,14 +26,15 @@ findRMSEFoundation <- function (dataSource, train, test, predictor)
 #'
 #' @param dataSource the data frame to process.
 #' @param predictor the predictor to build the model with, a factor of predictors can be passed.
+#' @param number_of_runs Number of of folds of the cross validation.
 #' @return factor
-findRMSE <- function (dataSource, predictor){
+findRMSE <- function (dataSource, predictor, number_of_runs){
   class.res <- 0
   rmse.res <- 0
 
   #[1] 0.3562574
   #[1] 0.3513133
-  for (i in 1:10){
+  for (i in 1:number_of_runs){
     set.seed(i);
     test.rows <- sample(1:nrow(dataSource), 0.33*nrow(dataSource));
     test <- dataSource[test.rows, ];
@@ -65,16 +66,32 @@ generateEquation <- function(dataSource, model){
 #' Dropping the most redundant variables in a step wise fashion, the remaining variables are used to build a GLM model, then extract only the statistically significant variables and rebuild the model. Finally, generate the probability formula.
 #'
 #' @param dataSource the dataframe to process.
+#' @param predicator the independent variable.
 #' @return text
 #' @importFrom Hmisc
-buildAModel <- function(dataSource){
-  redunancyOfModel <- redun(step~., dataSource)
+#'
+buildAModel <- function(dataSource, predicator){
+  sig_threshold = 0.05
+  redunancyForumla <- paste(predicator,'~.')
+  redunancyOfModel <- redun(~., dataSource)
+  redunancyOfModel <- redunancyOfModel[redunancyOfModel != predicator]
   forumla <- cat(redunancyOfModel$In, sep="+")
-  modelFitness <- bayesglm(forumla, data=dataSource, family = "binomial", control = list(maxit = 120))
+  forumlaOfModel <- paste(predicator,'~', forumla)
+  modelFitness <- bayesglm(forumlaOfModel, data=dataSource, family = "binomial", control = list(maxit = 120))
   # extract the metrics that are statistically significant and rebuild the model.
-  modelFitness2 <- bayesglm(forumla, data=dataSource, family = "binomial", control = list(maxit = 120))
+  significantMetrics <- names(coefficients(summary(model.x))[coefficients(summary(model.x))[,4] < sig_threshold,][,4])
+  significantMetrics <- significantMetrics[ significantMetrics != "(Intercept)"]
+  significantMetrics <- cat(significantMetrics, sep="+")
+  forumla2 <- paste(predicator,'~',significantMetrics)
+  #rebuilding the model
+  modelFitness2 <- bayesglm(forumla2, data=dataSource, family = "binomial", control = list(maxit = 120))
   # build the equation of the model with the metrics that are statistically significant.
   equation <- generateEquation(dataSource, modelFitness2)
 
   return(equation)
 }
+
+
+
+
+
