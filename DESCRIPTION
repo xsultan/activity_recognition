@@ -1,6 +1,6 @@
 Package: Motsai
 Title: Detecting steps on various scenarios
-Version: 0.0.0.1
+Version: 1.0.0
 Authors@R: person("Sultan", "Wehaibi", email = "s_alweha@encs.concordia.ca", role = c("aut", "cre"))
 Description: Detecting steps on various scenarios
 Depends:

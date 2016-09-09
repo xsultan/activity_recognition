@@ -31,7 +31,7 @@ mergeAndApplyFeature <- function(pathOfTheFolder, feature){
     results2[nrow(results2)+1,] <- results[j,]
   }
 
-  colnames(results2) <- paste(feature, colnames(results2), sep = "_") # add prefix to the column names
+    colnames(results2) <- paste(feature, colnames(results2), sep = "_") # add prefix to the column names
     return(results2)
 }
 
