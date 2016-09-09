@@ -29,5 +29,5 @@ eularAngles <- function(timestamp, a,b,c,d, radian = TRUE){
     yaw2   <- yaw2 * 180/pi
   }
 
-  return (list(timestamp=timestamp, roll1=roll1, roll2=roll2, pitch=pitch, yaw1=yaw1, yaw2=yaw2))
+  return (c(timestamp=timestamp, roll1=roll1, roll2=roll2, pitch=pitch, yaw1=yaw1, yaw2=yaw2))
 }

@@ -8,6 +8,7 @@
 #'
 #'
 mergeAndApplyFeature <- function(pathOfTheFolder, feature){
+  `%nin%` <- function (x, table) is.na(match(x, table, nomatch=NA_integer_))
   filenames <- list.files(path=pathOfTheFolder, full.names=TRUE)
   stepsCycle <- filenames[basename(filenames) %in% c("StepCycles.csv")]
   filenames <- filenames[basename(filenames) %nin% c("StepCycles.csv")]
