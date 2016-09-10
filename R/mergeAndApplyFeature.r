@@ -6,7 +6,7 @@
 #' @param feature Which feature to calculate, should be passed as a string
 #' @return data frame containing the step segments and with a prefix of the feature in the column names.
 #'
-#'
+#' @export
 mergeAndApplyFeature <- function(pathOfTheFolder, feature){
   `%nin%` <- function (x, table) is.na(match(x, table, nomatch=NA_integer_))
   filenames <- list.files(path=pathOfTheFolder, full.names=TRUE)

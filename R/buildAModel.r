@@ -8,6 +8,8 @@
 #' @param dataSource the data frame to process.
 #' @param model the GLM model where to extract the coefficients from.
 #' @return text
+#' @export
+#' @importFrom arm bayesglm
 generateEquation <- function(dataSource, model){
   equation <- (gsub(paste("\\*\\s", deparse(substitute(dataSource)), "\\$\\(Intercept\\)\\s\\+", sep=""), "- (", (paste(coef(model), names(coef(model)), sep = paste(' * ',gsub(" ", "", deparse(substitute(dataSource))),'$', sep=""), collapse = ' + '))))
   evEquation <- paste("1/(1+exp((-", equation, "))))", sep = "")
@@ -21,8 +23,7 @@ generateEquation <- function(dataSource, model){
 #' @param dataSource the data frame to process.
 #' @param predicator the independent variable.
 #' @return text
-#' @importFrom Hmisc, arm
-#'
+#' @export
 buildAModel <- function(dataSource, predicator){
   sig_threshold = 0.05 # threshold of the p-value
   datasetName = deparse(substitute(dataSource))

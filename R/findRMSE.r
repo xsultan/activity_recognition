@@ -8,6 +8,7 @@
 #' @param test the testing data frame.
 #' @param predictor the predictor to build the model with.
 #' @return matrix
+#' @export
 findRMSEFoundation <- function (dataSource, train, test, predictor)
 {
   train <- na.omit(train)
@@ -28,6 +29,7 @@ findRMSEFoundation <- function (dataSource, train, test, predictor)
 #' @param predictor the predictor to build the model with, a factor of predictors can be passed.
 #' @param number_of_runs Number of of folds of the cross validation.
 #' @return factor
+#' @export
 findRMSE <- function (dataSource, predictor, number_of_runs){
   class.res <- 0
   rmse.res <- 0

@@ -4,6 +4,7 @@
 #'
 #' @param model the model to extract the explained deviance from.
 #' @return text
+#' @export
 #'
 R2 <- function(model){
   ED = 1 - (model$deviance / model$null.deviance)

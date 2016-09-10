@@ -7,7 +7,7 @@
 #' @param radian by default is TRUE, if FALSE the returned calculations would be in degrees instead.
 #' @return a list contains the following data (timestamp, roll1, roll2, pitch, yaw1, yaw2)
 #'
-#'
+#' @export
 eularAngles <- function(timestamp, a,b,c,d, radian = TRUE){
   aq <- a/32768.0
   bq <- b/32768.0

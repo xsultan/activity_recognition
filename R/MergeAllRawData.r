@@ -8,7 +8,7 @@
 #' @param sep the field separator character.
 #' @return a data frame of all the data merged.
 #'
-#'
+#' @export
 MergeAllRawData <- function(pathOfTheFolder, step, radian = TRUE, sep = ";"){
   `%nin%` <- function (x, table) is.na(match(x, table, nomatch=NA_integer_))
   filenames <- list.files(path=pathOfTheFolder, full.names=TRUE)
