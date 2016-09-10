@@ -9,9 +9,15 @@ eularAngles(timestamp, a, b, c, d, radian = TRUE)
 \arguments{
 \item{timestamp}{the timestamp of the step}
 
-\item{radian}{by default is TRUE, if FALSE the returned calculations would be in degrees instead.}
+\item{a}{represents the reading from the quaternion value of quat0}
 
-\item{(a, b, c, d)}{represents the reading from the quaternion (quat0,quat1,quat2,quat3) respectively.}
+\item{b}{represents the reading from the quaternion value of quat1}
+
+\item{c}{represents the reading from the quaternion value of quat2}
+
+\item{d}{represents the reading from the quaternion value of quat3}
+
+\item{radian}{by default is TRUE, if FALSE the returned calculations would be in degrees instead.}
 }
 \value{
 a list contains the following data (timestamp, roll1, roll2, pitch, yaw1, yaw2)

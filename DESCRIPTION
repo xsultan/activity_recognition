@@ -1,4 +1,4 @@
-Package: Motsai
+Package: motsai
 Title: Detecting steps on various scenarios
 Version: 1.0.0
 Authors@R: person("Sultan", "Wehaibi", email = "s_alweha@encs.concordia.ca", role = c("aut", "cre"))
@@ -7,7 +7,8 @@ Depends:
     R (>= 3.2.2),
     knitr,
     roxygen2,
-    arm
+    arm,
+    Hmisc
 License: MIT
 Encoding: UTF-8
 LazyData: true

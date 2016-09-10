@@ -3,7 +3,10 @@
 #' Calculate the eular angles from quaternion and return (timestamp, roll1, roll2, pitch, yaw1, yaw2)
 #'
 #' @param timestamp the timestamp of the step
-#' @param (a,b,c,d) represents the reading from the quaternion (quat0,quat1,quat2,quat3) respectively.
+#' @param a represents the reading from the quaternion value of quat0
+#' @param b represents the reading from the quaternion value of quat1
+#' @param c represents the reading from the quaternion value of quat2
+#' @param d represents the reading from the quaternion value of quat3
 #' @param radian by default is TRUE, if FALSE the returned calculations would be in degrees instead.
 #' @return a list contains the following data (timestamp, roll1, roll2, pitch, yaw1, yaw2)
 #'
