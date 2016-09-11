@@ -6,7 +6,7 @@
 #' @return text
 #' @export
 #'
-R2 <- function(model){
+r2 <- function(model){
   ED = 1 - (model$deviance / model$null.deviance)
   return (cat("Explained Deviance [R^2]: ", ED, sep=""))
 }

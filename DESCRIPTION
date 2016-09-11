@@ -8,7 +8,8 @@ Depends:
     knitr,
     roxygen2,
     arm,
-    Hmisc
+    Hmisc,
+    reshape2
 License: MIT
 Encoding: UTF-8
 LazyData: true

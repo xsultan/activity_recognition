@@ -1,4 +1,4 @@
-#' Merge session files into one data frame
+#' Merge session files into one data frame - using files
 #'
 #' Merge session files into a data frame and calculate each feature by the step segment of that session.
 #'
@@ -7,7 +7,7 @@
 #' @return data frame containing the step segments and with a prefix of the feature in the column names.
 #'
 #' @export
-mergeAndApplyFeature <- function(pathOfTheFolder, feature){
+mergeAndApplyFeatureFiles <- function(pathOfTheFolder, feature){
   `%nin%` <- function (x, table) is.na(match(x, table, nomatch=NA_integer_))
   filenames <- list.files(path=pathOfTheFolder, full.names=TRUE)
   stepsCycle <- filenames[basename(filenames) %in% c("StepCycles.csv")]

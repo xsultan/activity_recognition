@@ -9,7 +9,7 @@
 #' @return a data frame of all the data merged.
 #'
 #' @export
-MergeAllRawData <- function(pathOfTheFolder, step, radian = TRUE, sep = ";"){
+mergeAllRawData <- function(pathOfTheFolder, step, radian = TRUE, sep = ";"){
   `%nin%` <- function (x, table) is.na(match(x, table, nomatch=NA_integer_))
   filenames <- list.files(path=pathOfTheFolder, full.names=TRUE)
   pedometer <- filenames[basename(filenames) %in% c("pedometer.csv")]
