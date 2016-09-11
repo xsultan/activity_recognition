@@ -9,7 +9,9 @@ Depends:
     roxygen2,
     arm,
     Hmisc,
-    reshape2
+    reshape2,
+    seewave,
+    lsr
 License: MIT
 Encoding: UTF-8
 LazyData: true

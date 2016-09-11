@@ -29,10 +29,9 @@ buildAModel <- function(dataSource, predicator){
   summary(modelFitness2)
   # build the equation of the model with the metrics that are statistically significant.
 
-  ### FIX
-  # issue with passing the data frame name, can be fixed using the outputed text function 'capture.output'
-  equationText <- paste("generateEquation(", deparse(substitute(dataSource)), "modelFitness2)")
-  equation <- generateEquation(dataSource, modelFitness2)
+
+  equationText <- paste("generateEquation(", deparse(substitute(dataSource))[1], ",modelFitness2)")
+  equation <- eval(parse(text=equationText))
 
   return(equation)
 }
