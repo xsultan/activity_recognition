@@ -122,7 +122,7 @@ motsaiFinalDataSet_clean$UP <- round(eval(parse(text=gsub("up_againstall", "mots
 motsaiFinalDataSet_clean$DOWN <- round(eval(parse(text=gsub("down_againstall", "motsaiFinalDataSet_clean", down_model))),2)
 motsaiFinalDataSet_clean$FLAT <- round(eval(parse(text=gsub("flat_againstall", "motsaiFinalDataSet_clean", flat_model))),2)
 
-
+motsaiFinalDataSet_clean$PROBABILITY <- colnames(motsaiFinalDataSet_clean[120:123])[apply(motsaiFinalDataSet_clean[120:123],1,which.max)]
 
 # SPLIT THE DATA BASED ON STEP (UP, DOWN OR FLAT)
 step <- split( motsaiFinalDataSet_clean , f = motsaiFinalDataSet_clean$step)
@@ -130,11 +130,13 @@ step <- split( motsaiFinalDataSet_clean , f = motsaiFinalDataSet_clean$step)
 
 # SHOW THE STEP AND THE PROBABILITY OF IT BEING UP
 step$UP[120:123]
-
+cat("Detection", sprintf("%.2f%%", 100-colSums(step$UP[120]!=step$UP[124])/nrow(step$UP)*100)[1], sep=" : ")
 
 # SHOW THE STEP AND THE PROBABILITY OF IT BEING DOWN
 step$DOWN[120:123]
-
+cat("Detection", sprintf("%.2f%%", 100-colSums(step$DOWN[120]!=step$DOWN[124])/nrow(step$DOWN)*100)[1], sep=" : ")
 
 # SHOW THE STEP AND THE PROBABILITY OF IT BEING FLAT
-step$FLAT[120:123]
+step$FLAT[120:124]
+cat("Detection", sprintf("%.2f%%", 100-colSums(step$FLAT[120]!=step$FLAT[124])/nrow(step$FLAT)*100)[1], sep=" : ")
+
