@@ -13,7 +13,7 @@ mergeAllRawData <- function(pathOfTheFolder, step, radian = TRUE, sep = ";"){
   `%nin%` <- function (x, table) is.na(match(x, table, nomatch=NA_integer_))
   filenames <- list.files(path=pathOfTheFolder, full.names=TRUE)
   pedometer <- filenames[basename(filenames) %in% c("pedometer.csv")]
-  filenames <- sort(filenames[basename(filenames) %nin% c("pedometer.csv", "rotation.csv", "dump.txt")])
+  filenames <- sort(filenames[basename(filenames) %nin% c("pedometer.csv", "rotation.csv", "dump.txt", ".DS_Store")])
 
   force <- data.frame("timestamp"= numeric(0), "fx"= numeric(0), "fy"= numeric(0), "fz"= numeric(0),stringsAsFactors = FALSE)
   forceCSV <- read.csv(file=filenames[1], sep = sep, header=F)[, -c(5)]
