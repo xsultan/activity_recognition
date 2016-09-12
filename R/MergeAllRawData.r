@@ -5,7 +5,7 @@
 #' @param pathOfTheFolder path to the source of the raw data.
 #' @param step indicates the step, we used {up, down and flat} as {0,1,2} respectively.
 #' @param radian by default is TRUE, if FALSE the returned calculations would be in degrees instead.
-#' @param sep the field separator character.
+#' @param sep the field separator character - default ";".
 #' @return a data frame of all the data merged.
 #'
 #' @export

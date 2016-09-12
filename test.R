@@ -1,47 +1,140 @@
+data("finalDataSet")
+motsaiFinalDataSet <- all_data
 features <- c("mean", "median", "sd", "var", "mad", "aad","rms")
 
-
-generateDataSet <- function(pathOfTheFolder, features, step, sep = ";"){
-  sessions <- list.files(pathOfTheFolder, full.names = T)
-  all <- NULL
-  for (i in sessions){
-    extractStepsCommand <-  paste("extractStepCycle('",i,"/0'",")", sep="")
-    steps <- eval(parse(text=extractStepsCommand))
-    mergeAllRawDataCommand <- paste("mergeAllRawData('",i,"/0'",",", step, ")", sep="")
-    mergedData <- eval(parse(text=mergeAllRawDataCommand))
-    z<- generateFullFeatures(mergedData, steps, features, step)
-    all <-rbind(all, z)
-  }
-
-  return(all)
-
-}
-
-
-
-generateFullFeatures <- function(steps, stepsCycle, f, step){
-  y4 <- NULL
-  features <- f
-  for (i in features){
-    y3 <- mergeAndApplyFeatureDataFrame(steps, stepsCycle, i)
-    y3$key <- rownames(y3)
-    y4$key <- rownames(y3)
-    y4 <- merge(y3, y4, by = "key")
-  }
-
-  y4$key <- NULL
-  y4$step <- step
-
-  return(y4)
-}
-
-
-features <- c("mean", "median", "sd", "var", "mad", "aad","rms")
-
-up <- generateDataSet("/Users/x21/Desktop/motsai_r/record/2016-08-01/raw/walking/Session-17/", features, "0")
+#up <- generateDataSet("/Users/sultan/Downloads/neblina-python/record/2016-08-01/raw/walking/Session-17", features, "0")
 
 # save(all_data, file="data/finalDataSet.rda")
 
 
 
 
+
+#-------------------- Testing the data set -------------------#
+
+
+up <- motsaiFinalDataSet[which(motsaiFinalDataSet$step == 0),]
+down <- motsaiFinalDataSet[which(motsaiFinalDataSet$step == 1),]
+flat <- motsaiFinalDataSet[which(motsaiFinalDataSet$step == 2),]
+
+
+############### EXTRACTING SAMPLES OF THE DATA TO GENERATE THREE DATASETS INORDER FOR US TO BUILD 3 MODELS ###############
+# 1. UP AGAINST DOWN AND FLAT - 300 ROWS OF UP, 150 ROWS OF DOWN AND 150 ROWS OF FLAT
+# 2. DOWN AGAINST UP AND FLAT - 300 ROWS OF DOWN, 150 ROWS OF UP AND 150 ROWS OF FLAT
+# 3. FLAT AGAINST UP AND DOWN - 300 ROWS OF FLAT, 150 ROWS OF UP AND 150 ROWS OF DOWN
+
+#   :::    ::: :::::::::
+#   :+:    :+: :+:    :+:
+#   +:+    +:+ +:+    +:+
+#   +#+    +:+ +#++:++#+
+#   +#+    +#+ +#+
+#   #+#    #+# #+#
+#   ########  ###
+
+up_processed <- up
+up_processed$step <- 1
+
+down_processed <- down
+down_processed$step <- 0
+
+flat_processed <- flat
+flat_processed$step <- 0
+
+
+up_againstall <- rbind(up_processed[sample(nrow(up_processed),300),], down_processed[sample(nrow(down_processed),150),], flat_processed[sample(nrow(flat_processed),150),])
+
+
+up_model <- buildAModel(up_againstall, "step")
+############# END ############
+
+
+
+#   :::::::::   ::::::::  :::       ::: ::::    :::
+#   :+:    :+: :+:    :+: :+:       :+: :+:+:   :+:
+#   +:+    +:+ +:+    +:+ +:+       +:+ :+:+:+  +:+
+#   +#+    +:+ +#+    +:+ +#+  +:+  +#+ +#+ +:+ +#+
+#   +#+    +#+ +#+    +#+ +#+ +#+#+ +#+ +#+  +#+#+#
+#   #+#    #+# #+#    #+#  #+#+# #+#+#  #+#   #+#+#
+#   #########   ########    ###   ###   ###    ####
+
+up_processed <- up
+up_processed$step <- 0
+
+down_processed <- down
+down_processed$step <- 1
+
+flat_processed <- flat
+flat_processed$step <- 0
+
+
+down_againstall <- rbind(up_processed[sample(nrow(up_processed),150),], down_processed[sample(nrow(down_processed),300),], flat_processed[sample(nrow(flat_processed),150),])
+
+down_model <- buildAModel(down_againstall, "step")
+
+############# END ############
+
+
+#   :::::::::: :::            ::: :::::::::::
+#   :+:        :+:          :+: :+:   :+:
+#   +:+        +:+         +:+   +:+  +:+
+#   :#::+::#   +#+        +#++:++#++: +#+
+#   +#+        +#+        +#+     +#+ +#+
+#   #+#        #+#        #+#     #+# #+#
+#   ###        ########## ###     ### ###
+
+
+up_processed <- up
+
+down_processed <- down
+down_processed$step <- 0
+
+flat_processed <- flat
+flat_processed$step <- 1
+
+flat_againstall <- rbind(up_processed[sample(nrow(up_processed),150),], down_processed[sample(nrow(down_processed),150),], flat_processed[sample(nrow(flat_processed),300),])
+
+flat_model <- buildAModel(flat_againstall, "step")
+############# END ############
+
+
+
+
+
+# NOW EXTRACTING THE UNTOUCHED ROWS TO TEST THE EFFECTIVENESS OF OUR ESTAIMATE PROBABILITY EQUATIONS.
+motsaiFinalDataSet_clean <- motsaiFinalDataSet
+motsaiFinalDataSet_clean <- motsaiFinalDataSet_clean[which(rownames(motsaiFinalDataSet_clean) %nin% rownames(up_againstall)), ]
+motsaiFinalDataSet_clean <- motsaiFinalDataSet_clean[which(rownames(motsaiFinalDataSet_clean) %nin% rownames(down_againstall)), ]
+motsaiFinalDataSet_clean <- motsaiFinalDataSet_clean[which(rownames(motsaiFinalDataSet_clean) %nin% rownames(flat_againstall)), ]
+motsaiFinalDataSet_clean <- na.omit(motsaiFinalDataSet_clean)
+
+
+#Naming the steps from 0,1,2 to up, down, flat
+
+motsaiFinalDataSet_clean[which(motsaiFinalDataSet_clean$step == 0),]$step = "UP"
+motsaiFinalDataSet_clean[which(motsaiFinalDataSet_clean$step == 1),]$step = "DOWN"
+motsaiFinalDataSet_clean[which(motsaiFinalDataSet_clean$step == 2),]$step = "FLAT"
+
+
+
+
+# CALCULATE THE ESTAIMATE PROBABILITY OF EACH MODEL
+motsaiFinalDataSet_clean$UP <- round(eval(parse(text=gsub("up_againstall", "motsaiFinalDataSet_clean", up_model))),2)
+motsaiFinalDataSet_clean$DOWN <- round(eval(parse(text=gsub("down_againstall", "motsaiFinalDataSet_clean", down_model))),2)
+motsaiFinalDataSet_clean$FLAT <- round(eval(parse(text=gsub("flat_againstall", "motsaiFinalDataSet_clean", flat_model))),2)
+
+
+
+# SPLIT THE DATA BASED ON STEP (UP, DOWN OR FLAT)
+step <- split( motsaiFinalDataSet_clean , f = motsaiFinalDataSet_clean$step)
+
+
+# SHOW THE STEP AND THE PROBABILITY OF IT BEING UP
+step$UP[120:123]
+
+
+# SHOW THE STEP AND THE PROBABILITY OF IT BEING DOWN
+step$DOWN[120:123]
+
+
+# SHOW THE STEP AND THE PROBABILITY OF IT BEING FLAT
+step$FLAT[120:123]
