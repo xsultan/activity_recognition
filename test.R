@@ -1,12 +1,23 @@
 data("finalDataSet")
+
+
+
+
+#features to be extracted
+features <- c("var", "sd", "rms", "median", "mean", "mad","aad")
+
+
+#generating the data from the raw files in the package.
+up <- generateDataSetsLocally("up", 0, features)
+down <- generateDataSetsLocally("down", 1, features)
+flat <- generateDataSetsLocally("flat", 2, features)
+
+#merge all the data frames into one data frame
+all_data2 <- rbind(up,down,flat)
+
+motsaiFinalDataSet <- all_data2
+
 motsaiFinalDataSet <- all_data
-features <- c("mean", "median", "sd", "var", "mad", "aad","rms")
-
-#up <- generateDataSet("/Users/sultan/Downloads/neblina-python/record/2016-08-01/raw/walking/Session-17", features, "0")
-
-# save(all_data, file="data/finalDataSet.rda")
-
-
 
 
 
@@ -69,7 +80,7 @@ flat_processed$step <- 0
 
 down_againstall <- rbind(up_processed[sample(nrow(up_processed),150),], down_processed[sample(nrow(down_processed),300),], flat_processed[sample(nrow(flat_processed),150),])
 
-down_model <- buildAModel(down_againstall, "step")
+down_model <- buildAModel(down_againstall, "step", 0)
 
 ############# END ############
 
@@ -93,7 +104,12 @@ flat_processed$step <- 1
 
 flat_againstall <- rbind(up_processed[sample(nrow(up_processed),150),], down_processed[sample(nrow(down_processed),150),], flat_processed[sample(nrow(flat_processed),300),])
 
-flat_model <- buildAModel(flat_againstall, "step")
+flat_model <- buildAModel(flat_againstall, "step", 0)
+
+
+
+
+
 ############# END ############
 
 
@@ -129,7 +145,7 @@ step <- split( motsaiFinalDataSet_clean , f = motsaiFinalDataSet_clean$step)
 
 
 # SHOW THE STEP AND THE PROBABILITY OF IT BEING UP
-step$UP[120:123]
+step$UP[120:124]
 cat("Detection", sprintf("%.2f%%", 100-colSums(step$UP[120]!=step$UP[124])/nrow(step$UP)*100)[1], sep=" : ")
 
 # SHOW THE STEP AND THE PROBABILITY OF IT BEING DOWN
@@ -139,4 +155,3 @@ cat("Detection", sprintf("%.2f%%", 100-colSums(step$DOWN[120]!=step$DOWN[124])/n
 # SHOW THE STEP AND THE PROBABILITY OF IT BEING FLAT
 step$FLAT[120:124]
 cat("Detection", sprintf("%.2f%%", 100-colSums(step$FLAT[120]!=step$FLAT[124])/nrow(step$FLAT)*100)[1], sep=" : ")
-

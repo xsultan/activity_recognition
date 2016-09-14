@@ -22,7 +22,8 @@ mergeAndApplyFeatureDataFrame <- function(dataSource, stepsCycle, feature){
     data = data[-nrow(data),] #remove the last row
     data$timestamp <- NULL # remove timestamps
     data$step <- NULL # remove steps
-    aggregated_data <- apply(data, 2, feature) # apply the feature to the dataframe
+    #aggregated_data <- round(sapply(data, feature, na.rm = TRUE), 2) # apply the feature to the dataframe
+    aggregated_data <- round(apply(data, 2, feature), 2)
     results <- rbind(results, setNames(aggregated_data, names(data))) # TODO: Verify the output of this
   }
 
