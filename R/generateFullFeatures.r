@@ -19,7 +19,7 @@ generateFullFeatures <- function(steps, stepsCycle, feature, step){
   }
 
   y4$key <- NULL
-  y4$step <- step
+  y4$step <- as.integer(step)
 
   return(y4)
 }

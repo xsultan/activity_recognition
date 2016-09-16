@@ -4,12 +4,14 @@
 \alias{buildAModel}
 \title{Builds a GLM model}
 \usage{
-buildAModel(dataSource, predicator)
+buildAModel(dataSource, predicator, numberOfKnots = NULL)
 }
 \arguments{
 \item{dataSource}{the data frame to process.}
 
 \item{predicator}{the independent variable.}
+
+\item{numberOfKnots}{Number of knots - Specifying numberOfKnots=0 will force all effects to be linear which will speed up the process.}
 }
 \value{
 text

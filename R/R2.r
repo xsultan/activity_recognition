@@ -7,6 +7,6 @@
 #' @export
 #'
 r2 <- function(model){
-  ED = 1 - (model$deviance / model$null.deviance)
-  return (cat("Explained Deviance [R^2]: ", ED, sep=""))
+  ED =1 - (model$deviance / model$null.deviance)
+  return (cat("Explained Deviance [R^2]: ", ED*100, sep=""))
 }

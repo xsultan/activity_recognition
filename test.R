@@ -1,5 +1,5 @@
 data("finalDataSet")
-
+motsaiFinalDataSet <- all_data
 
 
 
@@ -7,17 +7,17 @@ data("finalDataSet")
 features <- c("var", "sd", "rms", "median", "mean", "mad","aad")
 
 
-#generating the data from the raw files in the package.
-up <- generateDataSetsLocally("up", 0, features)
-down <- generateDataSetsLocally("down", 1, features)
-flat <- generateDataSetsLocally("flat", 2, features)
+#generating the data from the raw files in the package. These raw files reside under extdata
+up <- generateDataSetsLocally("up", 0)
+down <- generateDataSetsLocally("down", 1)
+flat <- generateDataSetsLocally("flat", 2)
 
 #merge all the data frames into one data frame
-all_data2 <- rbind(up,down,flat)
+dataSetOfDifferentScenarios<- rbind(up,down,flat)
 
-motsaiFinalDataSet <- all_data2
+motsaiFinalDataSet <- dataSetOfDifferentScenarios
 
-motsaiFinalDataSet <- all_data
+
 
 
 
@@ -144,14 +144,58 @@ motsaiFinalDataSet_clean$PROBABILITY <- colnames(motsaiFinalDataSet_clean[120:12
 step <- split( motsaiFinalDataSet_clean , f = motsaiFinalDataSet_clean$step)
 
 
+
+# ██╗   ██╗██████╗
+# ██║   ██║██╔══██╗
+# ██║   ██║██████╔╝
+# ██║   ██║██╔═══╝
+# ╚██████╔╝██║
+# ╚═════╝ ╚═╝
+
+
 # SHOW THE STEP AND THE PROBABILITY OF IT BEING UP
 step$UP[120:124]
+
+# SHOW THE PERCENTAGE OF THE CORRECT DETECTION
 cat("Detection", sprintf("%.2f%%", 100-colSums(step$UP[120]!=step$UP[124])/nrow(step$UP)*100)[1], sep=" : ")
 
+# SHOW THE NUMBER OF METRICS USED IN THE PROBABILITY EQUATION
+totalNumberOfMetricsUsed(up_model)
+
+
+
+# ██████╗  ██████╗ ██╗    ██╗███╗   ██╗
+# ██╔══██╗██╔═══██╗██║    ██║████╗  ██║
+# ██║  ██║██║   ██║██║ █╗ ██║██╔██╗ ██║
+# ██║  ██║██║   ██║██║███╗██║██║╚██╗██║
+# ██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
+# ╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
+
 # SHOW THE STEP AND THE PROBABILITY OF IT BEING DOWN
-step$DOWN[120:123]
+step$DOWN[120:124]
+
+# SHOW THE PERCENTAGE OF THE CORRECT DETECTION
 cat("Detection", sprintf("%.2f%%", 100-colSums(step$DOWN[120]!=step$DOWN[124])/nrow(step$DOWN)*100)[1], sep=" : ")
+
+# SHOW THE NUMBER OF METRICS USED IN THE PROBABILITY EQUATION
+totalNumberOfMetricsUsed(down_model)
+
+
+
+
+# ███████╗██╗      █████╗ ████████╗
+# ██╔════╝██║     ██╔══██╗╚══██╔══╝
+# █████╗  ██║     ███████║   ██║
+# ██╔══╝  ██║     ██╔══██║   ██║
+# ██║     ███████╗██║  ██║   ██║
+# ╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝
+
 
 # SHOW THE STEP AND THE PROBABILITY OF IT BEING FLAT
 step$FLAT[120:124]
+
+# SHOW THE PERCENTAGE OF THE CORRECT DETECTION
 cat("Detection", sprintf("%.2f%%", 100-colSums(step$FLAT[120]!=step$FLAT[124])/nrow(step$FLAT)*100)[1], sep=" : ")
+
+# SHOW THE NUMBER OF METRICS USED IN THE PROBABILITY EQUATION
+totalNumberOfMetricsUsed(flat_model)
