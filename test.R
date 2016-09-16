@@ -1,3 +1,4 @@
+library("motsai")
 data("finalDataSet")
 motsaiFinalDataSet <- all_data
 
@@ -80,7 +81,7 @@ flat_processed$step <- 0
 
 down_againstall <- rbind(up_processed[sample(nrow(up_processed),150),], down_processed[sample(nrow(down_processed),300),], flat_processed[sample(nrow(flat_processed),150),])
 
-down_model <- buildAModel(down_againstall, "step", 0)
+down_model <- buildAModel(down_againstall, "step")
 
 ############# END ############
 
@@ -104,7 +105,7 @@ flat_processed$step <- 1
 
 flat_againstall <- rbind(up_processed[sample(nrow(up_processed),150),], down_processed[sample(nrow(down_processed),150),], flat_processed[sample(nrow(flat_processed),300),])
 
-flat_model <- buildAModel(flat_againstall, "step", 0)
+flat_model <- buildAModel(flat_againstall, "step")
 
 
 
