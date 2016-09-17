@@ -15,6 +15,6 @@ generateEquation(dataSource, model)
 text
 }
 \description{
-Generates an equation of the form Y = a + bX, where X is the explanatory variable and Y is the dependent variable. Using this equation we can find the probability of being an the dependent variable.
+Generates an equation of the form Y = a + bX, where X is the explanatory variables and Y is the dependent variable. Using this equation we can find the probability of being the dependent variable.
 }
 

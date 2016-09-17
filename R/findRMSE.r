@@ -1,5 +1,5 @@
 
-#' Builds a predictive model and returns the RMSE
+#' Builds a predictive model and returns the RMSE - helper
 #'
 #' Builds a predictive model and return the Root-Mean-Square Error (the difference between the actual and the predicted values).
 #'

@@ -4,14 +4,16 @@
 \alias{buildAModel}
 \title{Builds a GLM model}
 \usage{
-buildAModel(dataSource, predicator, numberOfKnots = NULL)
+buildAModel(dataSource, predicator, forumla, threshold = 0.05)
 }
 \arguments{
 \item{dataSource}{the data frame to process.}
 
 \item{predicator}{the independent variable.}
 
-\item{numberOfKnots}{Number of knots - Specifying numberOfKnots=0 will force all effects to be linear which will speed up the process.}
+\item{forumla}{list of metrics concatenated with a plus.}
+
+\item{threshold}{the threshold of the significant variables}
 }
 \value{
 text

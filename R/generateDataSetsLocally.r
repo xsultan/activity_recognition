@@ -7,6 +7,7 @@
 #' @param step indicates the step, we used {up, down and flat} as {0,1,2} respectively.
 #' @param sep the field separator character - default ";".
 #' @return a data frame
+#' @importFrom logging basicConfig
 #' @export
 generateDataSetsLocally <- function(folder, step, sep = ","){
   pathForFolder <- paste(system.file(package="motsai"), "/extdata/",folder, sep="")
@@ -14,7 +15,7 @@ generateDataSetsLocally <- function(folder, step, sep = ","){
   fullDataSet <- NULL
   all <- NULL
   for (i in sessions){
-    message(paste("Loading data from : ", i))
+    loginfo(paste("Loading data from", i, sep=" : "), logger="motsai.test")
     filenames <- list.files(path=i, full.names=TRUE)
     pedometer <- filenames[basename(filenames) %in% c("StepCycles.csv")]
     filenames <- sort(filenames[basename(filenames) %nin% c(".DS_Store", "StepCycles.csv")])
