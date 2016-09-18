@@ -10,7 +10,6 @@ Depends:
     arm,
     Hmisc,
     reshape2,
-    seewave,
     lsr,
     Deriv,
     logging
