@@ -168,7 +168,7 @@ step <- split( motsaiFinalDataSet_clean , f = motsaiFinalDataSet_clean$step)
 
 # SHOW THE STEP AND THE PROBABILITY OF IT BEING UP
 loginfo("Show the Step and the Probability of It Being Up", logger="motsai.test")
-step$UP[120:124]
+#step$UP[120:124]
 
 # SHOW THE PERCENTAGE OF THE CORRECT DETECTION
 loginfo("Show the Percentage of the Correct Detection", logger="motsai.test")
@@ -185,11 +185,10 @@ loginfo(paste("Detection of steps being up", sprintf("%.2f%%", 100-colSums(step$
 
 # SHOW THE STEP AND THE PROBABILITY OF IT BEING DOWN
 loginfo("Show the Step and the Probability of It Being Down", logger="motsai.test")
-step$DOWN[120:124]
+#step$DOWN[120:124]
 
 # SHOW THE PERCENTAGE OF THE CORRECT DETECTION
 loginfo("Show the Percentage of the Correct Detection", logger="motsai.test")
-cat("Detection", sprintf("%.2f%%", 100-colSums(step$DOWN[120]!=step$DOWN[124])/nrow(step$DOWN)*100)[1], sep=" : ")
 loginfo(paste("Detection of steps being down", sprintf("%.2f%%", 100-colSums(step$DOWN[120]!=step$DOWN[124])/nrow(step$DOWN)*100)[1], sep=" : "))
 
 
@@ -205,7 +204,8 @@ loginfo(paste("Detection of steps being down", sprintf("%.2f%%", 100-colSums(ste
 
 # SHOW THE STEP AND THE PROBABILITY OF IT BEING FLAT
 loginfo("Show the Step and the Probability of It Being Flat", logger="motsai.test")
-step$FLAT[120:124]
+#step$FLAT[120:124]
 
 # SHOW THE PERCENTAGE OF THE CORRECT DETECTION
+loginfo("Show the Percentage of the Correct Detection", logger="motsai.test")
 loginfo(paste("Detection of steps being flat", sprintf("%.2f%%", 100-colSums(step$FLAT[120]!=step$FLAT[124])/nrow(step$FLAT)*100)[1], sep=" : "))
