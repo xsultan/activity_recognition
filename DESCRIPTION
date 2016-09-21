@@ -4,11 +4,12 @@ Version: 1.0.0
 Authors@R: person("Sultan", "Wehaibi", email = "s_alweha@encs.concordia.ca", role = c("aut", "cre"))
 Description: Detecting steps on various scenarios
 Depends:
-    R (>= 3.2.2),
+    R (>= 3.1.1),
     knitr,
     roxygen2,
     arm,
     Hmisc,
+    rms,
     reshape2,
     lsr,
     Deriv,
