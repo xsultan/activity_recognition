@@ -10,6 +10,7 @@
 #' @export
 mergeAndApplyFeatureDataFrameLocally <- function(dataSource, stepsCycle, feature){
 
+  rms <- function(num) sqrt(sum(num^2)/length(num));
 
   results2 <- data.frame("ax"= numeric(0), "ay"= numeric(0), "az"= numeric(0), "roll1"= numeric(0), "roll2"= numeric(0), "pitch"= numeric(0), "yaw1"= numeric(0), "yaw2"= numeric(0), fx= numeric(0), fy= numeric(0), fz= numeric(0), gx= numeric(0), gy= numeric(0), gz= numeric(0), mx= numeric(0), my= numeric(0), mz= numeric(0), stringsAsFactors = FALSE)
   results <- data.frame() # empty data frame to dump the segmants on

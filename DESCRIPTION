@@ -9,7 +9,6 @@ Depends:
     roxygen2,
     arm,
     Hmisc,
-    rms,
     reshape2,
     lsr,
     Deriv,
