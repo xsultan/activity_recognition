@@ -37,8 +37,7 @@ down <- motsaiFinalDataSet[which(motsaiFinalDataSet$step == 1),]
 flat <- motsaiFinalDataSet[which(motsaiFinalDataSet$step == 2),]
 
 loginfo("Remove the highly correlated metrics.", logger="motsai.test")
-removedMetrics <- removeCorrelatedFeatures(motsaiFinalDataSet)
-
+removedMetrics <- removeCorrelatedFeatures(motsaiFinalDataSet, predicator = "step", threshold = 0.9)
 
 ############### EXTRACTING SAMPLES OF THE DATA TO GENERATE THREE DATASETS INORDER FOR US TO BUILD 3 MODELS ###############
 # 1. UP AGAINST DOWN AND FLAT - 300 ROWS OF UP, 150 ROWS OF DOWN AND 150 ROWS OF FLAT
@@ -153,7 +152,7 @@ motsaiFinalDataSet_clean$FLAT <- round(eval(parse(text=gsub("flat_againstall", "
 motsaiFinalDataSet_clean$PROBABILITY <- colnames(motsaiFinalDataSet_clean[120:123])[apply(motsaiFinalDataSet_clean[120:123],1,which.max)]
 
 # SPLIT THE DATA BASED ON STEP (UP, DOWN OR FLAT)
-loginfo("Split the Data Based on Step (Up, down or Flat)", logger="motsai.test")
+loginfo("Split the Data Based on Step (Up, Down or Flat)", logger="motsai.test")
 step <- split( motsaiFinalDataSet_clean , f = motsaiFinalDataSet_clean$step)
 
 

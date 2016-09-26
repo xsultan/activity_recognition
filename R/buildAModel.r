@@ -25,6 +25,10 @@ buildAModel <- function(dataSource, predicator, forumla, threshold=0.05){
 
   significantMetrics <- names(coefficients(summary(modelFitness))[coefficients(summary(modelFitness))[,4] < sig_threshold,][,4])
   significantMetrics <- significantMetrics[ significantMetrics != "(Intercept)"]
+  #calculate the number of metrics removed from the model.
+  significantMetricsPrint <- significantMetrics
+  totalNumberOfMetrics <- abs(length(significantMetrics) - length(coefficients(summary(modelFitness))[,4]))
+  totalNumberOfMetricsRemoved <- totalNumberOfMetrics
   significantMetrics <- paste(significantMetrics, collapse="+")
 
   loginfo("Extract only the statistically significant metrics from the first model and re-build it using them.", logger="motsai.model")
@@ -32,6 +36,12 @@ buildAModel <- function(dataSource, predicator, forumla, threshold=0.05){
     logwarn("NOTE: All the metrics seems to be statistically insignificant, we will build the model again with them all", logger="motsai.model")
     significantMetrics <- forumla
   }
+
+
+  loginfo(paste("Number of metrics removed", totalNumberOfMetricsRemoved, sep=" : "), logger="motsai.model")
+  loginfo(paste("The statistically significant metrics are", paste(significantMetricsPrint, collapse = ", "), sep=" : "), logger="motsai.model")
+
+
   forumla2 <- paste(predicator,'~',significantMetrics,sep="")
   #rebuilding the model
   # http://www.ats.ucla.edu/stat/mult_pkg/faq/general/complete_separation_logit_models.htm
@@ -43,5 +53,6 @@ buildAModel <- function(dataSource, predicator, forumla, threshold=0.05){
   equationText <- paste("generateEquation(", deparse(substitute(dataSource))[1], ",modelFitness2)")
   equation <- eval(parse(text=equationText))
 
+  loginfo(paste("The probability formula", equation, sep=" : "), logger="motsai.model.equation")
   return(equation)
 }
