@@ -2,8 +2,8 @@ library("motsai")
 library("logging")
 
 #This is a binary version of the data set, can be loaded without the need to preform the setps below to generate the data frames.
-#data("finalDataSet")
-#motsaiFinalDataSet <- all_data
+data("finalDataSet")
+motsaiFinalDataSet <- all_data
 
 #features to be extracted
 features <- c("var", "sd", "rms", "median", "mean", "mad","aad")
@@ -15,15 +15,15 @@ basicConfig()
 addHandler(writeToFile, logger="motsai", file="motsai.log")
 
 
-loginfo("Generating the data from the raw files in the package. These raw files reside under extdata.", logger="motsai.test")
-up <- generateDataSetsLocally("up", 0)
-down <- generateDataSetsLocally("down", 1)
-flat <- generateDataSetsLocally("flat", 2)
-
-loginfo("Merge all the data frames into one data frame.", logger="motsai.test")
-dataSetOfDifferentScenarios<- rbind(up,down,flat)
-
-motsaiFinalDataSet <- dataSetOfDifferentScenarios
+# loginfo("Generating the data from the raw files in the package. These raw files reside under extdata.", logger="motsai.test")
+# up <- generateDataSetsLocally("up", 0)
+# down <- generateDataSetsLocally("down", 1)
+# flat <- generateDataSetsLocally("flat", 2)
+#
+# loginfo("Merge all the data frames into one data frame.", logger="motsai.test")
+# dataSetOfDifferentScenarios<- rbind(up,down,flat)
+#
+# motsaiFinalDataSet <- dataSetOfDifferentScenarios
 
 
 
@@ -171,7 +171,8 @@ loginfo("Show the Step and the Probability of It Being Up", logger="motsai.test"
 
 # SHOW THE PERCENTAGE OF THE CORRECT DETECTION
 loginfo("Show the Percentage of the Correct Detection", logger="motsai.test")
-loginfo(paste("Detection of steps being up", sprintf("%.2f%%", 100-colSums(step$UP[120]!=step$UP[124])/nrow(step$UP)*100)[1], sep=" : "))
+loginfo(paste("Detection of steps being up : ", format((100-colSums(step$UP[120]!=step$UP[124])/nrow(step$UP)*100)[1], digits = 2,  nsmall=2),"%", sep=""))
+
 
 
 
@@ -188,7 +189,7 @@ loginfo("Show the Step and the Probability of It Being Down", logger="motsai.tes
 
 # SHOW THE PERCENTAGE OF THE CORRECT DETECTION
 loginfo("Show the Percentage of the Correct Detection", logger="motsai.test")
-loginfo(paste("Detection of steps being down", sprintf("%.2f%%", 100-colSums(step$DOWN[120]!=step$DOWN[124])/nrow(step$DOWN)*100)[1], sep=" : "))
+loginfo(paste("Detection of steps being down : ", format((100-colSums(step$DOWN[120]!=step$DOWN[124])/nrow(step$DOWN)*100)[1], digits = 2,  nsmall=2),"%", sep=""))
 
 
 
@@ -207,4 +208,4 @@ loginfo("Show the Step and the Probability of It Being Flat", logger="motsai.tes
 
 # SHOW THE PERCENTAGE OF THE CORRECT DETECTION
 loginfo("Show the Percentage of the Correct Detection", logger="motsai.test")
-loginfo(paste("Detection of steps being flat", sprintf("%.2f%%", 100-colSums(step$FLAT[120]!=step$FLAT[124])/nrow(step$FLAT)*100)[1], sep=" : "))
+loginfo(paste("Detection of steps being flat : ", format((100-colSums(step$FLAT[120]!=step$FLAT[124])/nrow(step$FLAT)*100)[1], digits = 2,  nsmall=2),"%", sep=""))
