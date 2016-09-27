@@ -63,5 +63,3 @@ mergeAllRawData <- function(pathOfTheFolder, step, radian = TRUE, sep = ";"){
 
   return(MergedData)
 }
-
-#d<- MergeAllRawData("/Users/sultan/Downloads/neblina-python/record/2016-07-27-early-morning/Session-0/0", 0, F)

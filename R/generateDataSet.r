@@ -9,6 +9,7 @@
 #' @return a data frame
 #' @export
 generateDataSet <- function(pathOfTheFolder, features, step, sep = ";"){
+  rms <- function(num) sqrt(sum(num^2)/length(num));
   sessions <- list.files(pathOfTheFolder, full.names = T)
   all <- NULL
   for (i in sessions){
