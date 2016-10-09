@@ -8,6 +8,7 @@ motsaiFinalDataSet <- all_data
 #features to be extracted
 features <- c("var", "sd", "rms", "median", "mean", "mad","aad")
 
+sample_size <- 300
 predicator <- "step"
 
 # Logging header
@@ -62,7 +63,7 @@ flat_processed <- flat
 flat_processed$step <- 0
 
 
-up_againstall <- rbind(up_processed[sample(nrow(up_processed),300),], down_processed[sample(nrow(down_processed),150),], flat_processed[sample(nrow(flat_processed),150),])
+up_againstall <- rbind(up_processed[sample(nrow(up_processed),sample_size),], down_processed[sample(nrow(down_processed),(sample_size/2)),], flat_processed[sample(nrow(flat_processed),(sample_size/2)),])
 
 
 loginfo("Building the up model.", logger="motsai.test")
@@ -89,7 +90,7 @@ flat_processed <- flat
 flat_processed$step <- 0
 
 
-down_againstall <- rbind(up_processed[sample(nrow(up_processed),150),], down_processed[sample(nrow(down_processed),300),], flat_processed[sample(nrow(flat_processed),150),])
+down_againstall <- rbind(up_processed[sample(nrow(up_processed),(sample_size/2)),], down_processed[sample(nrow(down_processed),sample_size),], flat_processed[sample(nrow(flat_processed),(sample_size/2)),])
 
 loginfo("Building the down model", logger="motsai.test")
 down_model <- buildAModel(down_againstall, predicator, removedMetrics)
@@ -114,7 +115,7 @@ down_processed$step <- 0
 flat_processed <- flat
 flat_processed$step <- 1
 
-flat_againstall <- rbind(up_processed[sample(nrow(up_processed),150),], down_processed[sample(nrow(down_processed),150),], flat_processed[sample(nrow(flat_processed),300),])
+flat_againstall <- rbind(up_processed[sample(nrow(up_processed),(sample_size/2)),], down_processed[sample(nrow(down_processed),(sample_size/2)),], flat_processed[sample(nrow(flat_processed),sample_size),])
 
 loginfo("Building the flat model", logger="motsai.test")
 flat_model <- buildAModel(flat_againstall, predicator, removedMetrics)
