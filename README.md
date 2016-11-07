@@ -17,7 +17,7 @@ install.packages("devtools")
 * Install motsai package via the following command
 
 ```{r}
-devtools::install_github("xsultan/motsai")
+devtools::install_github("xsultan/activity_recognition")
 ```
 
 #### For Windows:
@@ -43,5 +43,5 @@ install.packages(c("minqa", "abind", "coda", "nloptr")
 Now try to install the motsai package using the following command:
 
 ```{r}
-devtools::install_github("xsultan/motsai")
+devtools::install_github("xsultan/activity_recognition")
 ```
