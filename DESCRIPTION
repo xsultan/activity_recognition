@@ -1,4 +1,4 @@
-Package: motsai
+Package: activity_recognition
 Title: Detecting steps on various scenarios
 Version: 1.0.0
 Authors@R: person("Sultan", "Wehaibi", email = "s_alweha@encs.concordia.ca", role = c("aut", "cre"))
