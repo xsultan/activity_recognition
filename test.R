@@ -1,4 +1,4 @@
-library("motsai")
+library("activity_recognition")
 library("logging")
 
 #This is a binary version of the data set, can be loaded without the need to preform the setps below to generate the data frames.
